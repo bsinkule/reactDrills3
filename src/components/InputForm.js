@@ -3,37 +3,28 @@ import React from 'react'
 class InputForm extends React.Component {
     constructor(props){
         super(props)
-        this.state = { 
+        this.state = {
+            
         }   
       }
     
-      onSubmit = (e) => {
+      handleSubmit = (e) => {
           e.preventDefault()
-          e.target.reset()
-          let text = document.querySelector("#message")
-          document.querySelector('#application-preview').textContent = ""
-          text.textContent = "Your application was submitted!"
+          this.props.onSubmit()
       }
 
-      updatePreview = () => {
-        const preview = document.querySelector('#application-preview');
-        const text = document.querySelector('#application-text').value;
-        preview.textContent = text;
-      } 
-
-    render(props) {
+    render() {
         return (
             <div>
-                <form id="application-input" onSubmit={this.onSubmit}>
+                <form id="application-input" onSubmit={(e)=> this.handleSubmit(e)}>
                     <label>Apply Here: </label>
-                    <textarea onChange={this.updatePreview} id="application-text" rows="8" cols="100"></textarea>
+                    <textarea value={this.props.value} onChange={this.props.onInput} id="application-text" rows="8" cols="100"></textarea>
                     <input  id="submit" type="submit" value="Submit" />
+                    {this.props.isToggleOn ? <p>Your application was submitted!</p> : ""}
                 </form>
-                <p id="message">&nbsp;</p>
             </div>
         )
     }
-
 }
 export default InputForm
 
